@@ -5,6 +5,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
+import { LogBox } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -13,6 +15,7 @@ export const unstable_settings = {
 };
 
 SplashScreen.preventAutoHideAsync();
+LogBox.ignoreLogs(["SafeAreaView has been deprecated"]);
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -35,11 +38,11 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <SafeAreaProvider>
       <StatusBar style="dark" />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
       </Stack>
-    </>
+    </SafeAreaProvider>
   );
 }
